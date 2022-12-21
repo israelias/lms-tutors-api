@@ -2,6 +2,7 @@ node_modules
 .env
 .env.test
 .env.local
+.env.prod
 access.log
 package-lock.json
 yarn.lock
@@ -9,3 +10,8 @@ yarn-error.log
 .vscode
 .gcloudignore
 app.yaml
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
