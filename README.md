@@ -1,136 +1,492 @@
-![](https://github.com/israelias/lantutors/blob/master/public/notifications.png?raw=true)
-# Lantutors
-Scholastic administrative app for educators, home-based tutors, and mentors to connect with students that can benefit from after-school or full-time tutoring.
-The app's overwhelming long-term purpose and value is for registered tutors to perform administrative functions for on-campus or remote-based classes effectively and consistently.
-
-Please visit the project at [lantutuors.vercel.app](https://lantutors.vercel.app).
-
-
-Additionally, the restful backend API can be viwed at [appspot.com/api](https://fsdisraelias.df.r.appspot.com/). For a sample response, please visit the [commonstudents](https://fsdisraelias.df.r.appspot.com/api/commonstudents) endpoint.
-
-[Go to backend](https://github.com/israelias/lantutors/tree/master/backend)      
-
+[Back to root](https://github.com/israelias/lantutors#contents)  
 [Go to frontend](https://github.com/israelias/lantutors/tree/master/frontend)
-## UX
-### User Stories
-#### New Tutor Goals
-- As a New Tutor, I want to have a good understanding of what the website does.
-- As a New Tutor, I want to be able to create an account as a registered tutor.
-- As a New Tutor, I want to be able to see a table of existing turor(s) and student(s) assigned to them.
-- As a New Tutor, I want to be able to see a table/list of all currently registered students.
-- As a New Tutor, I want to be able to see a table/list of all currently registered students assigned to all existing tutors. 
-#### Returning Tutor Goals
-- As a Returning Tutor, I want to be able to log in securely.
-- As a Returning Tutor, I want to be able to create a student account for a student.
-- As a Returning Tutor, I want to be able to add a flag to a student's account with a `suspension` record.
-- As a Returning Tutor, I want to be able to edit a student account I created.
-- As a Returning Tutor, I want to be able to assign a student to one or more existing tutors.
-- As a Returning Tutor, I want to be able to see a list of student(s) filtered by a specific tutor they are assigned to. 
-- As a Returning Tutor, I want to be able to edit the list of student(s) assigned to specific tutor(s). 
-#### Frequent Tutor Goals
-- As a Frequent Tutor, I want to retrieve a list of students who are not `suspended` and can thus receive and be alerted by a notification I create.
-- As a Frequent Tutor, I want to be able create a notification message that, by default, alerts students that are assigned to me as a tutor.
-- As a Frequent Tutor, I want to be able create a notification message that alerts my students as well as students I explicitly mention in my notification whether or not they are assigned to me as a tutor.
+# Lantutors Back-End
 
-## Features
-### Existing Features
+The restful API is deployed at [appspot.com](https://fsdisraelias.df.r.appspot.com/) via GoogleCloud App Engine. The database is also served via GCloud's Cloud SQL on a personal account.
+## Development Requirements
 
-*** TODO ***
-#### All Students
-![](https://github.com/israelias/lantutors/blob/master/public/students.png?raw=true)
+Postman:
+https://www.getpostman.com/collections/fdd4d23afa552d169904
 
-#### Common Students
-![](https://github.com/israelias/lantutors/blob/master/public/sortcommon.png?raw=true)
+Required softwares:
 
-#### Notifications
-![](https://github.com/israelias/lantutors/blob/master/public/notifications.png?raw=true)
+1. NodeJS
+2. MySQL
 
-#### Post / Register
-![](https://github.com/israelias/lantutors/blob/master/public/notify.png?raw=true)
-#### Suspend
-![](https://github.com/israelias/lantutors/blob/master/public/student.png?raw=true)
+If you dont have MYSQL, you can run a local db server via Docker using something similar to the `docker-compose.yml` in this repo and run `docker-compose up`
 
-### Features Left To Implement
-- Ability to delete an account
-- Ability to search existing tutors and students 
-- Ability to issue a request to another tutor when his/her student is being reassigned to another tutor
+## Methods
+### Sign in as a Tutor
+#### `api/account`: POST
+* Request body example
+``` json
+{
+  "email": "tutorken@gmail.com",
+  "password": "tutorkenpassword"
+} 
+```
+* Successful Response body example
+``` json
+{
+    "tutor": "tutorken@gmail.com",
+    "message": "Account Created",
+    "code": 200
+}
+```
 
-## Technologies
-### Frameworks and Libraries
-  - ### [`cd frontend`](https://github.com/israelias/lantutors/tree/master/frontend)
-    Please visit the [frontend](https://github.com/israelias/lantutors/tree/master/frontend) sub directory for details on ReactJS Typescript frameworks and libraries.\
+### Register your students
+#### ***Live Endpoint***: [appspot.com/api/register](https://fsdisraelias.df.r.appspot.com/api/register)
+#### `api/register`: POST
 
-[Go to frontend](https://github.com/israelias/lantutors/tree/master/frontend)
-  - ### [`cd backend`](https://github.com/israelias/lantutors/tree/master/backend)
-    Please visit the [backend](https://github.com/israelias/lantutors/tree/master/backend) root directory for details on ExpressJS Sequelize frameworks and libraries.
+* Request body example
+``` json
+{
+  "tutor": "tutorken@gmail.com",
+  "students":
+    [
+      "studentholt@gmail.com",
+      "studentjohn@gmail.com"
+    ]
+} 
+```
+* Successful Response body example
+``` json
+{
+    "tutor": "tutorken@gmail.com",
+    "students": [
+        "studentholt@gmail.com",
+        "studentjohn@gmail.com"
+    ],
+    "message": "Students Registered",
+    "code": 200
 
-
-[Go to backend](https://github.com/israelias/lantutors/tree/master/backend)
-
-
-### Programs and Software
-- [VSCode:](https://www.vscode.com/) Visual Studiio Code 2020.3.2 by [Microsoft](https://www.microsoft.com/) is the IDE used to locally construct the project
-- [Git:](https://git-scm.com/) Git is used as the version control system and is utilized via the WebStorm terminal to `commit` to Git and `push` to GitHub.
-- [GitHub:](https://github.com/) GitHub is used to store the project's code and directory upon concurrent `push`es via Git.
-
-# Testing
-## User testing
-### TBD
-
-## Code testing
-  - ### [`cd backend`](https://github.com/israelias/lantutors/tree/master/backend)
-    Please visit the [backend](https://github.com/israelias/lantutors/tree/master/backend) root directory for details on running unit tests with `Joi/Express` validation and a pre-configured database `Factory`.
-## Deployment
-
-- The project frontend is written in [Typescript]() developed with [React](https://reactjs.org/), bootstrapped with [NextJS](https://nextjs.org/) by using `npx create-next-app --typescript` and deployed with [Vercel](https://nextjs.org/docs/deployment). The backend is written in [Javascript](), developed with [ExpressJS]() to serve a restful MySQL database via [Sequelize-CLI]() hosted with [GoogleCloud SQL]() and deployed with [Google Cloud App Engine](). 
-  ### [`cd frontend`](https://github.com/israelias/lantutors/tree/master/frontend)
-  Please visit the [frontend](https://github.com/israelias/lantutors/tree/master/frontend) root directory for details on deployment steps.
-  ### [`cd backend`](https://github.com/israelias/lantutors/tree/master/backend)
-  Please visit the [backend](https://github.com/israelias/lantutors/tree/master/backend) root directory for details on deployment steps.
-
-## Cloning This Repo
-- Clone this repo by running `git clone https://github.com/israelias/lantutors`
-- at the jump, `cd` to the name of this repo:
-`cd lantutors`
-  ### [`cd frontend`](https://github.com/israelias/lantutors/tree/master/frontend)
-  Please visit the [frontend](https://github.com/israelias/lantutors/tree/master/frontend) root directory for details on required modules via `yarn install` and to start the frontend development server on `localhost:3000`.
-  ### [`cd backend`](https://github.com/israelias/lantutors/tree/master/backend)
-  Please visit the [backend](https://github.com/israelias/lantutors/tree/master/backend) root directory for details on required modules via and ***ExpressJS-SequelizeCLI-specific*** `package.json` and to start the backend development server on `localhost:4000`.
-- Alternatively, you can clone each of the subdirectories separately, and follow the procedures given from this `monorepo/subrepo`.
-
-## Credits
-
-### Code
-- Some frontend components are assembled from references available in [Material-UI's Getting Started Templates](https://material-ui.com/getting-started/templates/). This was done to streamline `Layout` configurations so production could focus on data UI.
-### Acknowledgments
-#### ESLint and Typescript Configuration
-- [ESlint Typescript with Prettier](https://dev.to/benweiser/how-to-set-up-eslint-typescript-prettier-with-create-react-app-3675) 
-- [Create-React-App: Typescript, ESLint & Prettier with Airbnb style guides on VSCode](https://medium.com/react-courses/react-create-react-app-v3-4-1-a55f3e7a8d6d)
-- [Airbnb Javascript style guide — Key takeaway](https://medium.com/docon/airbnb-javascript-style-guide-key-takeaways-ffd0370c053)
--[Config ESLint, Prettier in Typescript React App](https://rajduraisamy.medium.com/config-eslint-prettier-in-typescript-react-app-c92ebf14a896)
-#### ReactJS and Typescript References
-- [ReactJS Typescript components](https://medium.com/react-courses/instant-write-reactjs-typescript-components-complete-beginners-guide-with-a-cheatsheet-e32a76022a44)
-
-#### Sequelize-CLI ExpressJS backend 
-- [ExpressJS: Accessing `req.query` vs `req.body`](http://expressjs.com/en/4x/api.html#req.body)
-- [Joi: Validating an Input That Can Be More Than One Datatype](https://stackoverflow.com/questions/53155132/check-if-an-input-variable-is-string-or-array-using-joi)
-- [ExpressJS unit testing with routes](https://stackoverflow.com/questions/9517880/how-does-one-unit-test-routes-with-express)
-- [Node and Express Testing](https://mherman.org/blog/testing-node-and-express/)
-- [Node, Express, MySQL, Sequelize exmaple](https://medium.com/@prajramesh93/getting-started-with-node-express-and-mysql-using-sequelize-ed1225afc3e0)
-- [Creating Sequelize MYSQL Model Associations with Sequelize-CLI](https://levelup.gitconnected.com/creating-sequelize-associations-with-the-sequelize-cli-tool-d83caa902233)
-- [Sequelize Association with `WHERE IN ("ARRAY)`](https://stackoverflow.com/questions/42719750/sequelize-relation-with-where-in-array)
-- [Setting Up Sequelize Associations](https://medium.com/craft-academy/setting-up-sequelize-associations-abddc5ed16d0)
-- [CRUD Testing with NodeJS and Express](https://mherman.org/blog/testing-node-and-express/)
+}
+```
 
 
-#### Factory-Girl with Sequelize-CLI References
-- [Sequelize Adapter Set Up](https://stackoverflow.com/questions/47255125/factory-girl-set-up-with-sequelize-adapter)
-- [FactoryGirl: How to `find_or_initialize` when Testing](https://stackoverflow.com/questions/22874292/find-or-initialize-by-in-factorygirl)
-- [FactoryGirl With Sequelize Adapter: Breaking Configs](https://github.com/simonexmachina/factory-girl/issues/63)
 
-#### Google Cloud Platform, CloudSQL connection to ExpressJS and Sequelize
-- [Full-Stack App on GCP with a Cloud SQL Connection](https://dev.to/wpreble1/deploy-a-full-stack-app-on-gcp-with-a-cloud-sql-connection-part-2-14il)
-- [Deploying Flask Restful Backend](https://medium.com/analytics-vidhya/flask-restful-api-with-heroku-da1ecf3e04b)
+### Post a Notification 
+#### ***Live Endpoint***: [appspot.com/api/retrievenotifications](https://fsdisraelias.df.r.appspot.com/api/retrievenotifications)
+#### `api/retrievenotifications`: POST
+* Request body example 
+* In this example, `@studentann` and `@studentmary` are already registered students via `api/register` by another tutor. 
+* In this example, `studentcommon` and `studentshared` are students `tutorken` had registered previously.
 
-#### Relevant Latest NextJS to Material-UI-V5 Breaking Changes
-- [June 2020: MUI Migration from v4 to v5](https://github.com/mui-org/material-ui/blob/HEAD/docs/src/pages/guides/migration-v4/migration-v4.md)
+``` json
+{
+  "tutor": "tutorken@gmail.com",
+  "notification": "Hello students! @studentanne@gmail.com @studentmary@gmail.com"
+  
+} 
+```
+* Successful Response body example
+* In this example, all registered students assigned to `@tutorken` recieve the notification, along with any student `@mentioned` in his `notification`.
+* Any students in the recipients list have to have a student record, whether or not they are registered to `@tutorken`
+``` json
+{
+    "tutor": "tutorken@gmail.com",
+    "recipients": [
+        "studentanne@gmail.com",
+        "studentmary@gmail.com",
+        "studentholt@gmail.com",
+        "studentjohn@gmail.com",
+        "studentcommon@gmail.com",
+        "studentshared@gmail.com"
+    ],
+    "message": "Notification posted",
+    "code": 200
+}
+```
+>>> BUG: Currently, mentioning a student twice returns that student's email twice in `recipients`. This does ***not***, however, duplicate that student's record.
+
+### Suspend or Unsuspend a Student 
+#### ***Live Endpoint***: [appspot.com/api/suspend](https://fsdisraelias.df.r.appspot.com/api/suspend)
+#### `api/suspend`: POST 
+* Request body example  (Toggles the `suspended` field for `student`)
+
+``` json
+{
+  "student": "studentanne@gmail.com",
+  
+} 
+```
+* Successful Response body example
+``` json
+{
+    "student": "studentanne@gmail.com",
+    "messsage": "studentann has been suspended",
+    "code": 200
+}
+```
+#### `api/suspend`: POST
+* Request body example (Toggles the `suspended` field for `student`)
+
+``` json
+{
+  "student": "studentanne@gmail.com",
+  
+} 
+```
+* Successful Response body example
+``` json
+{
+    "student": "studentanne@gmail.com",
+    "messsage": "studentann's suspension has been lifted",
+    "code": 200
+}
+```
+
+
+### Get Students common to Tutor(s)
+#### ***Live Endpoint***: [appspot.com/api/commonstudents](https://fsdisraelias.df.r.appspot.com/api/commonstudents)
+#### `api/commonstudents?`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns all students if there are no web args
+* In this example `studentsjared`, `studentcommon`, were previously registered by `tutorken` and `studentanother` was previosly registered by and to another tutor `tutoranother`
+
+``` json
+{
+    "students": [
+        "studentann@gmail.com",
+        "studentmary@gmail.com",
+        "studentholt@gmail.com",
+        "studentjohn@gmail.com",
+        "studentanother@gmail.com",
+        "studentcommon@gmail.com",
+        "studentshared@gmail.com"
+    ]
+}
+```
+
+#### ***Live Endpoint***: [appspot.com/api/commonstudents?tutor=isabel@isabel.com](https://fsdisraelias.df.r.appspot.com/api/commonstudents?tutor=isabel@isabel.com) (with existing tutor `isabel` record params)
+#### `api/commonstudents?tutor=tutorken@gmail.com`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns all students assigned to `tutorken` via the URL query param `tutor` i.e. `?tutor=tutorken@gmail.com` 
+``` json
+{
+    "students": [
+        "studentann@gmail.com",
+        "studentmary@gmail.com",
+        "studentholt@gmail.com",
+        "studentjohn@gmail.com",
+        "studentshared@gmail.com",
+        "studentcommon@gmail.com",
+    ]
+}
+```
+
+#### ***Live Endpoint***: [appspot.com/api/commonstudents?tutor=john@john.com](https://fsdisraelias.df.r.appspot.com/api/commonstudents?tutor=john@john.com) (with existing tutor `john` record params)
+#### `api/commonstudents?tutor=tutoranother@gmail.com`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns all students assigned to `tutoranother` via the URL query param `tutor` i.e. `?tutor=tutoranother@gmail.com` 
+``` json
+{
+    "students": [
+        "studentanother@gmail.com",
+        "studentshared@gmail.com",
+        "studentcommon@gmail.com",
+    ]
+}
+```
+
+#### ***Live Endpoint***: [appspot.com/api/commonstudents?tutor=john@john.com&tutor=isabel@isabel.com](https://fsdisraelias.df.r.appspot.com/api/commonstudents?tutor=john@john.com&tutor=isabel@isabel.com) (with existing tutor `isabel` and `john` record params)
+#### `api/commonstudents?tutor=tutorken@gmail.com&tutor=tutoranother@gmail.com`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns students if and only if those students are assigned to both `tutorken` and `tutoranother` via the URL query param `tutor` i.e. `?tutor=tutorken@gmail.com&tutor=tutoranother@gmail.com`
+* The sample logic applies to as many number of `tutor`s in the query param 
+* Note the exlusion of all of `tutorken`'s other students and our new variable, `tutoranother`'s other student, `studentanother`.
+
+``` json
+{
+    "students": [
+        "studentshared@gmail.com",
+        "studentcommon@gmail.com",
+    ]
+}
+```
+
+### Get all Students
+#### ***Live Endpoint***: [appspot.com/api/allstudents](https://fsdisraelias.df.r.appspot.com/api/allstudents)
+#### `api/allstudents`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns all raw student records
+``` json
+[
+  {
+    "id": 1,
+    "email": "email@email.com",
+    "suspended": false,
+    "createdAt": "2021-06-25T07:58:37.000Z",
+    "updatedAt": "2021-06-26T13:35:55.000Z"
+  },
+  {...students}
+]
+```
+
+#### ***Live Endpoint***: [appspot.com/api/students](https://fsdisraelias.df.r.appspot.com/api/students)
+#### `api/students`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns all registered student emails
+``` json
+[
+  {
+     "students": [
+        "kate@kate.com",
+        "chris@chris.com",
+        "noah@noah.com",
+        "elias@elias.com",
+    ]
+  }
+
+]
+```
+
+### Get one Student
+#### ***Live Endpoint***: [appspot.com/api/elias@elias.com](https://fsdisraelias.df.r.appspot.com/api/students/elias@elias.com)
+#### `api/students/email@email.com`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns one raw student record
+``` json
+ {
+    "id": 1,
+    "email": "email@email.com",
+    "suspended": false,
+    "createdAt": "2021-06-25T07:58:37.000Z",
+    "updatedAt": "2021-06-26T13:35:55.000Z"
+  }
+```
+
+
+### Get all Tutors
+#### ***Live Endpoint***: [appspot.com/api/tutors](https://fsdisraelias.df.r.appspot.com/api/tutors)
+#### `api/tutors`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns all raw tutor records
+``` json
+[
+  {
+    "id": 1,
+    "email": "tutor@tutor.com",
+    "password": "$2a$10$TH0sytl7DCVXIhVTF0kgJ.IffcOTAnGtTiZgNU9BLQ0KLE1JsXFh2",
+    "createdAt": "2021-06-25T07:58:37.000Z",
+    "updatedAt": "2021-06-26T13:35:55.000Z"
+  },
+  {...tutors}
+]
+```
+
+### Get one Tutor
+#### ***Live Endpoint***: [appspot.com/api/tutors/john@john.com](https://fsdisraelias.df.r.appspot.com/api/tutors/john@john.com)
+#### `api/tutors/email@email.com`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns one raw student record
+``` json
+ {
+    "id": 1,
+    "email": "tutor@tutor.com",
+    "password": "$2a$10$TH0sytl7DCVXIhVTF0kgJ.IffcOTAnGtTiZgNU9BLQ0KLE1JsXFh2",
+    "createdAt": "2021-06-25T07:58:37.000Z",
+    "updatedAt": "2021-06-26T13:35:55.000Z"
+  }
+```
+
+
+### Get all Notifications
+#### ***Live Endpoint***: [appspot.com/api/allnotifications](https://fsdisraelias.df.r.appspot.com/api/allnotifications)
+#### `api/allnotifications`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns all raw `Tutor-Student-Notification` association records
+``` json
+[
+    {
+        "id": 1,
+        "student": "kevin@kevin.com",
+        "tutor": "alfred@alred.com",
+        "title": "[Tutor alfred]: Fri Jun 25 2021 08:04:58 GMT+0000 (Coordinated Universal Time)",
+        "message": "Great to meet everyone and see you all on our site visit next Friday. Reminding @kevin@kevin.com @kate@kate.com and @joem@joem.com to bring their registration forms.",
+        "createdAt": "2021-06-25T08:04:58.000Z",
+        "updatedAt": "2021-06-25T08:04:58.000Z",
+    },
+    { ...notifications}
+]
+```
+
+### Get all Notifications by Tutor
+#### ***Live Endpoint***: [appspot.com/api/notifications/john@john.com](https://fsdisraelias.df.r.appspot.com/api/notifications/john@john.com)
+#### `api/notifications/tutor@email.com`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns all raw `Tutor-Student-Notification` association records issued by `tutor`
+``` json
+[
+     {
+        "id": 13,
+        "student": "kate@kate.com",
+        "tutor": "john@john.com",
+        "title": "[Tutor john]: Fri Jun 25 2021 08:09:31 GMT+0000 (Coordinated Universal Time)",
+        "message": "See you guys next week!",
+        "createdAt": "2021-06-25T08:09:31.000Z",
+        "updatedAt": "2021-06-25T08:09:31.000Z"
+    },
+    { ...notificationsFromJohn}
+]
+```
+
+
+### Get all Tutor-Student associations
+#### ***Live Endpoint***: [appspot.com/api/alltutorstudents](https://fsdisraelias.df.r.appspot.com/api/alltutorstudents)
+#### `api/alltutorstudents`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns all raw `Tutor-Student` association records
+``` json
+[
+      {
+        "id": 1,
+        "tutor": "alfred@alfred.com",
+        "student": "kate@kate.com",
+        "active": true,
+        "createdAt": "2021-06-25T07:58:38.000Z",
+        "updatedAt": "2021-06-25T07:58:38.000Z"
+    },
+    { ...tutorStudents}
+]
+```
+
+### Get all Tutor-Student associations by Tutor
+#### ***Live Endpoint***: [appspot.com/api/commonstudents/john@john.com](https://fsdisraelias.df.r.appspot.com/api/commonstudents/john@john.com)
+#### `api/commonstudents/tutor@email.com`: GET
+* If using Postman, ensure that the body is empyty.
+
+* Returns a reduced object of tutor email and students' emails via `Tutor-Student` associations where students are assigned to the tutor in the web argument.
+``` json
+{
+    "tutor": "john@john.com",
+    "students": [
+        "kate@kate.com",
+        "kevin@kevin.com",
+        "joem@joem.com"
+    ]
+}
+```
+
+## Frameworks and Libraries
+- [ExpressJS:](https://expressjs.com/) 
+- [Sequelize:](https://sequelize.org/) 
+- [NextJS:](https://nextjs.org/) 
+- [Axios](https://github.com/axios/axios) 
+- [Joi](https://joi.dev/api/?v=17.4.0) via [Express-Validation](https://github.com/AndrewKeig/express-validation)
+- [Factory-Girl](https://github.com/simonexmachina/factory-girl)
+- [Faker](https://github.com/fzaninotto/Faker)
+
+## Resources
+- [GCloud Deployment](https://cloud.google.com/appengine)
+- [GCloud SQL](https://cloud.google.com/sql)
+
+
+## Running Locally and Available Scripts
+
+1. **Clone the repo and go inside the folder.**
+
+2. **Install the project dependencies**
+
+   ```shell
+    npm install
+   ```
+
+3. **Create `.env` file in the root folder, with the ff. format.**
+   Fill in the appropriate mysql credentials.
+
+   ```shell
+    APP_PORT=4000
+    DB_HOST=localhost
+    DB_USER=root
+    DB_PASS=password
+    DB_NAME=development-student-management
+    DB_DIALECT=mysql
+    DB_PORT=3306
+    APP_HOST=localhost
+    NODE_ENV=development
+   ```
+
+4. **Create development database.**
+   ```shell
+     npm run db:create
+   ```
+5. **Run the migrations.**
+   ```shell
+     npm run db:migrate
+   ```
+6. **Run the app**
+   ```shell
+     npm run dev
+   ```
+
+## 🚀 How to run test
+
+1. **Create `.env.test` file in the root folder, with the ff. format.**
+   Fill in the appropriate mysql credentials for test evironment.
+   ```shell
+     APP_PORT=4000
+     DB_HOST=localhost
+     DB_USER=root
+     DB_PASS=password
+     DB_NAME=test-student-management
+     DB_DIALECT=mysql
+     DB_PORT=3306
+     APP_HOST=localhost
+     NODE_ENV=test
+   ```
+2. **Run the test**
+
+   ```shell
+     npm run test
+   ```
+
+   The test results should look like this.
+
+   ```shell
+      PASS  src/controllers/api.controller.spec.js (12.529 s)
+      Api Controller
+        Register API
+          Invalid body
+            ✓ should fail without tutor  (23 ms)
+            ✓ should fail without students  (22 ms)
+            ✓ should fail if tutor is not an email (8 ms)
+            ✓ should fail if students are not in email format (3 ms)
+          Valid body
+            ✓ should pass for new tutor and students (132 ms)
+            ✓ should pass for existing tutor and new students (20 ms)
+            ✓ should pass for new tutor and old students (1024 ms)
+        GetCommonStudents API
+          Invalid query
+            ✓ should fail without tutor  (3 ms)
+            ✓ should fail if tutor is not an email  (4 ms)
+          Valid query
+            ✓ should pass for single common tutor  (1075 ms)
+            ✓ should pass for multiple common tutor (1037 ms)
+        SuspendStudent API
+          Invalid body
+            ✓ should fail for nonexistent student (4 ms)
+          Valid body
+            ✓ should pass for existing student (13 ms)
+        ReceiveNotifications API
+          Invalid body
+            ✓ should fail if tutor is empty (2 ms)
+            ✓ should fail if notification is empty (3 ms)
+        Valid body
+          ✓ should fail if tutor doesnt exist (5 ms)
+          ✓ should pass and retrieve students that belongs to the tutor (1033 ms)
+          ✓ should pass and retrieve students that belongs to the tutor and mentioned students (2045 ms)
+          ✓ should pass and retrieve students that are not suspended only (2035 ms)
+   ```

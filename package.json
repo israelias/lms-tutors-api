@@ -1,7 +1,7 @@
 {
-  "name": "lantutors-backend",
+  "name": "lms-tutors-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "Admin platform restful API Express.js with Sequelize",
   "main": "index.js",
   "private": true,
   "scripts": {
@@ -23,14 +23,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/israelias/lantutors.git"
+    "url": "git+https://github.com/israelias/lms-tutors-api.git"
   },
   "author": "Joem Elias Sanez",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/israelias/lantutors/issues"
+    "url": "https://github.com/israelias/lms-tutors-api/issues"
   },
-  "homepage": "https://github.com/israelias/lantutors#readme",
+  "homepage": "https://github.com/israelias/lms-tutors-api#readme",
   "dependencies": {
     "@babel/core": "^7.13.10",
     "@babel/plugin-proposal-object-rest-spread": "^7.13.8",
